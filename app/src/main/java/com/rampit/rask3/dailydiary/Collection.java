@@ -57,6 +57,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -137,6 +139,7 @@ public class Collection extends AppCompatActivity
     SQLiteHelper sqlite;
     SQLiteDatabase database;
     EditText searchView, searchid;
+    CheckBox cbGpay;
     Button ad, can, save ,save1;
     TextView tot, ppp, bbb, totco, collect_history,clobal;
     ScrollView sc1, sc2;
@@ -234,6 +237,7 @@ public class Collection extends AppCompatActivity
 
         seesim = findViewById(R.id.sesimg);
         collect_history = findViewById(R.id.collection_history);
+        cbGpay = findViewById(R.id.cb_gpay);
         total1 = findViewById(R.id.dayss);
         instal = findViewById(R.id.inamount);
         String sesid = pref.getString("id", "");
@@ -1516,7 +1520,9 @@ public class Collection extends AppCompatActivity
                 }
             }
         });
-//        list1();
+        cbGpay.setOnCheckedChangeListener((compoundButton, status) -> {
+            Log.e("status====",status+"");
+        });
     }
 
     //pphhoonnee() - show user numbers
@@ -1762,7 +1768,7 @@ public class Collection extends AppCompatActivity
         Log.d("ffoorr",formattedDate);
         sqlite = new SQLiteHelper(this);
         database = sqlite.getReadableDatabase();
-        String MY_QUERY1 = "SELECT cus.*,deb.customer_id,col.collection_amount as collect,sum(col.collection_amount)as paid ,deb.debit_amount,deb.debit_date,deb.id as did FROM dd_customers cus " +
+        String MY_QUERY1 = "SELECT cus.*,deb.customer_id,col.debit_id,col.collection_amount as collect,sum(col.collection_amount)as paid ,deb.debit_amount,deb.debit_date,deb.id as did FROM dd_customers cus " +
                 " LEFT JOIN dd_account_debit deb on deb.customer_id = cus.id" +
                 " LEFT JOIN dd_collection col on deb.id = col.debit_id " +
                 "  WHERE cus.tracking_id = ? AND deb.debit_date <= ? AND deb.active_status = 1 AND  cus.debit_type IN(0,1) GROUP BY cus.id ORDER BY cus.order_id_new ASC";
@@ -2903,6 +2909,7 @@ public class Collection extends AppCompatActivity
                     index = cursor.getColumnIndexOrThrow("customer_name");
                     String Name = cursor.getString(index);
 
+
                     index = cursor.getColumnIndexOrThrow("id");
                     String id = cursor.getString(index);
                     index = cursor.getColumnIndexOrThrow("debit_amount");
@@ -3030,8 +3037,15 @@ public class Collection extends AppCompatActivity
                         index = cursor.getColumnIndexOrThrow("ccid");
                         ccid = cursor.getString(index);
 
+                        //by kk
+                        index = cursor.getColumnIndexOrThrow("customer_id");
+                        int customerId = cursor.getInt(index);
+
+                        //end kk
+                             
                         index = cursor.getColumnIndexOrThrow("customer_name");
                         String Name = cursor.getString(index);
+
                         nme = cursor.getString(index);
                         Log.d("op",nme);
                         index = cursor.getColumnIndexOrThrow("collection_amount");

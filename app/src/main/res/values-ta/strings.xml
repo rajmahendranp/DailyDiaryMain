@@ -508,5 +508,6 @@
     <string name="i_have_my_license_key">I have my license key?</string>
     <string name="enter_license">Please enter valid license key</string>
     <string name="download">Download</string>
+    <string name="g_pay">ஆன்லைன்/ஜிபே</string>
     <string name="bulupdate_alert1">அனைத்து சேகரிப்பும் புதுப்பிக்கப்பட்டு, அனைத்து சேகரிப்புப் பக்கத்திற்கும் நகர்த்தப்படும்</string>
 </resources>

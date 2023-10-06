@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -90,7 +91,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".main_activity1"/>
         <activity android:name=".Splash"
-            android:configChanges="locale">
+            android:configChanges="locale"
+            android:exported="true">
             <intent-filter>
 
                 <action android:name="android.intent.action.MAIN" />
@@ -134,7 +136,8 @@
         <activity
             android:name=".Print_activity"
             android:requestLegacyExternalStorage="true"
-            android:label="@string/title_print" >
+            android:label="@string/title_print"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />

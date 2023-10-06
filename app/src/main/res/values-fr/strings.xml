@@ -17,5 +17,6 @@
     <string name="archive">Archive</string>
     <string name="please_sign">"Le compte Google n'est pas connecté correctement. Veuillez vous connecter pour le téléchargement dans le lecteur."</string>
     <string name="edit_folder">Edit Folder name</string>
+    <string name="g_pay">en ligne/Gpay</string>
     <string name="are_you_sure_delete_collection">Are you sure want to delete this collection?</string>
 </resources>

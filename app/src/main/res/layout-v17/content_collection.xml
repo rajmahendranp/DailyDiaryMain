@@ -1099,17 +1099,36 @@
 
                     </LinearLayout>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/collection_history"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="right"
-                    android:text="@string/collection_history"
-                    android:textSize="20dp" />
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/cb_gpay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/g_pay"
+                        android:textColor="?attr/textcolor1"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:buttonTint="?attr/colorPrimary"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        />
+                    <TextView
+                        android:id="@+id/collection_history"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="right"
+                        android:text="@string/collection_history"
+                        android:textSize="20dp"
+                        />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
         <LinearLayout

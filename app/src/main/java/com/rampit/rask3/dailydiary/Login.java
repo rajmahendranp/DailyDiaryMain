@@ -593,12 +593,7 @@ public class Login extends AppCompatActivity {
                     alertbox.setMessage(enn);
                     alertbox.setTitle(war);
                     alertbox.setIcon(R.drawable.dailylogo);
-                    alertbox.setNeutralButton(ook,
-                            new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface arg0,
-                                                    int arg1) {
-                                }
+                    alertbox.setNeutralButton(ook, (arg0, arg1) -> {
                             });
                     alertbox.show();
                 }else{
@@ -612,17 +607,38 @@ public class Login extends AppCompatActivity {
                         new Timer().schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
+                                runOnUiThread(() -> {
 
-                                        if(actsta == null || actsta.equalsIgnoreCase("") || actsta.equalsIgnoreCase("null")){
-                                            Log.d("activeeee","yesss");
-                                        }else{
-                                            if(actsta.equalsIgnoreCase("active")  ){
-                                                Log.d("activeeee","yesss1");
+                                    if(actsta == null || actsta.equalsIgnoreCase("") || actsta.equalsIgnoreCase("null")){
+                                        Log.d("activeeee","yesss");
+                                    }else{
+                                        if(actsta.equalsIgnoreCase("active")  ){
+                                            Log.d("activeeee","yesss1");
 //                            if(actsta.equalsIgnoreCase("active") && device_id1.equalsIgnoreCase(device_id)){
-                                                if(License.equalsIgnoreCase("no")||License.equalsIgnoreCase("")){
+                                            if(License.equalsIgnoreCase("no")||License.equalsIgnoreCase("")){
+                                                SQLiteHelper sqlite = new SQLiteHelper(Login.this);
+                                                SQLiteDatabase database = sqlite.getWritableDatabase();
+                                                ContentValues values1 = new ContentValues();
+                                                values1.put("quick_bulkupdate", "1");
+                                                database.update("dd_user", values1,"ID = ?", new String[]{"1"});
+                                                sqlite.close();
+                                                database.close();
+                                                editor.putString("quickbulk", String.valueOf(1));
+                                                editor.commit();
+                                            }
+                                            else{
+                                                if(subscr_id == null || subscr_id.equalsIgnoreCase("") || subscr_id.equalsIgnoreCase("null") ||
+                                                        subscr_id.equalsIgnoreCase("Dailydiary")){
+                                                    SQLiteHelper sqlite = new SQLiteHelper(Login.this);
+                                                    SQLiteDatabase database = sqlite.getWritableDatabase();
+                                                    ContentValues values1 = new ContentValues();
+                                                    values1.put("quick_bulkupdate", "0");
+                                                    database.update("dd_user", values1,"ID = ?", new String[]{"1"});
+                                                    sqlite.close();
+                                                    database.close();
+                                                    editor.putString("quickbulk", String.valueOf(0));
+                                                    editor.commit();
+                                                }else if (  subscr_id.equalsIgnoreCase("quick_bulk_update")){
                                                     SQLiteHelper sqlite = new SQLiteHelper(Login.this);
                                                     SQLiteDatabase database = sqlite.getWritableDatabase();
                                                     ContentValues values1 = new ContentValues();
@@ -632,20 +648,131 @@ public class Login extends AppCompatActivity {
                                                     database.close();
                                                     editor.putString("quickbulk", String.valueOf(1));
                                                     editor.commit();
+                                                }else{
+                                                    SQLiteHelper sqlite = new SQLiteHelper(Login.this);
+                                                    SQLiteDatabase database = sqlite.getWritableDatabase();
+                                                    ContentValues values1 = new ContentValues();
+                                                    values1.put("quick_bulkupdate", "0");
+                                                    database.update("dd_user", values1,"ID = ?", new String[]{"1"});
+                                                    sqlite.close();
+                                                    database.close();
+                                                    editor.putString("quickbulk", String.valueOf(0));
+                                                    editor.commit();
                                                 }
-                                                else{
-                                                    if(subscr_id == null || subscr_id.equalsIgnoreCase("") || subscr_id.equalsIgnoreCase("null") ||
-                                                            subscr_id.equalsIgnoreCase("Dailydiary")){
-                                                        SQLiteHelper sqlite = new SQLiteHelper(Login.this);
-                                                        SQLiteDatabase database = sqlite.getWritableDatabase();
-                                                        ContentValues values1 = new ContentValues();
-                                                        values1.put("quick_bulkupdate", "0");
-                                                        database.update("dd_user", values1,"ID = ?", new String[]{"1"});
-                                                        sqlite.close();
-                                                        database.close();
-                                                        editor.putString("quickbulk", String.valueOf(0));
-                                                        editor.commit();
-                                                    }else if (  subscr_id.equalsIgnoreCase("quick_bulk_update")){
+                                            }
+                                            Log.d("user_pass",username+","+password);
+                                            sqlite = new SQLiteHelper(Login.this);
+                                            database = sqlite.getReadableDatabase();
+                                            cursor = database.rawQuery("SELECT * FROM "+SQLiteHelper.TABLENAME12+" WHERE "+SQLiteHelper.USNAM+"=? AND "+SQLiteHelper.USPASS+" =?",new String[]{username,password});
+                                            if (cursor != null) {
+                                                if (cursor.getCount() != 0) {
+                                                    cursor.moveToFirst();
+                                                    do {
+                                                        int index;
+
+                                                        index = cursor.getColumnIndexOrThrow("username");
+                                                        USER = cursor.getString(index);
+                                                        index = cursor.getColumnIndexOrThrow("password");
+                                                        PASS = cursor.getString(index);
+                                                        index = cursor.getColumnIndexOrThrow("otp");
+                                                        OTP = cursor.getString(index);
+                                                        index = cursor.getColumnIndexOrThrow("ID");
+                                                        ID = cursor.getString(index);
+//                                                            index = cursor.getColumnIndexOrThrow("quick_bulkupdate");
+                                                        Integer quick_bulkupda = 0;
+                                                        String quick_bulkupdate = "0";
+                                                        if(quick_bulkupdate == null ||quick_bulkupdate.equalsIgnoreCase("")){
+                                                            quick_bulkupda = 0;
+                                                        }
+
+                                                        index = cursor.getColumnIndexOrThrow("backup_privilege");
+                                                        Integer backpri = cursor.getInt(index);
+                                                        String bbackp = cursor.getString(index);
+                                                        if(bbackp == null ||bbackp.equalsIgnoreCase("")){
+                                                            backpri = 1;
+                                                        }
+                                                        if(OTP == null || OTP.equalsIgnoreCase("")){
+                                                            editor.putString("user",USER);
+                                                            editor.putString("pass",PASS);
+                                                            editor.putString("otp",OTP);
+                                                            editor.putString("id",ID);
+                                                            editor.putString("backpri", String.valueOf(backpri));
+//                                                                editor.putString("quickbulk", String.valueOf(quick_bulkupda));
+                                                            editor.putInt("isloginn",1);
+                                                            editor.commit();
+                                                            Toast.makeText(getApplicationContext(),"Login successfull",Toast.LENGTH_SHORT).show();
+//                                    cursor.close();
+//                                    sqlite.close();
+//                                    database.close();
+                                                            lastlogin();
+                                                            Intent login1 = new Intent(Login.this,Enterotp.class);
+                                                            Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                                                                    android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
+                                                            login1.putExtra("user",USER);
+                                                            login1.putExtra("pass",PASS);
+                                                            login1.putExtra("otp",OTP);
+                                                            login1.putExtra("ID",ID);
+                                                            login1.putExtra("vaa","1");
+                                                            editor.putString("backpri", String.valueOf(backpri));
+//                                                                editor.putString("quickbulk", String.valueOf(quick_bulkupda));
+                                                            startActivity(login1,bundle);
+
+                                                        }
+                                                        else{
+                                                            editor.putString("user",USER);
+                                                            editor.putString("pass",PASS);
+                                                            editor.putString("otp",OTP);
+                                                            editor.putString("id",ID);
+                                                            editor.putString("backpri", String.valueOf(backpri));
+//                                                                editor.putString("quickbulk", String.valueOf(quick_bulkupda));
+                                                            editor.putInt("isloginn",1);
+                                                            editor.commit();
+                                                            Toast.makeText(getApplicationContext(),"Login successfull",Toast.LENGTH_SHORT).show();
+//                                    cursor.close();
+//                                    sqlite.close();
+//                                    database.close();
+                                                            lastlogin();
+                                                            backupDatabase();
+                                                        }
+                                                    }
+                                                    while (cursor.moveToNext());
+                                                    cursor.close();
+                                                    sqlite.close();
+                                                    database.close();
+                                                }else{
+                                                    cursor.close();
+                                                    sqlite.close();
+                                                    database.close();
+                                                    backupDatabase1();
+                                                    AlertDialog.Builder alertbox = new AlertDialog.Builder(Login.this,R.style.AlertDialogTheme);
+                                                    String enn = getString(R.string.usepassmis);
+                                                    String war = getString(R.string.warning);
+                                                    String ook = getString(R.string.ok);
+                                                    alertbox.setMessage(enn);
+                                                    alertbox.setTitle(war);
+                                                    alertbox.setIcon(R.drawable.dailylogo);
+                                                    alertbox.setNeutralButton(ook,
+                                                            new DialogInterface.OnClickListener() {
+
+                                                                public void onClick(DialogInterface arg0,
+                                                                                    int arg1) {
+                                                                }
+                                                            });
+                                                    alertbox.show();
+                                                }
+                                            }
+                                            else{
+                                                cursor.close();
+                                                sqlite.close();
+                                                database.close();
+                                                Toast.makeText(getApplicationContext(),"Username or password is incorrect",Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        else if(actsta.equalsIgnoreCase("blocked")){
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    if(License.equalsIgnoreCase("no")||License.equalsIgnoreCase("")){
                                                         SQLiteHelper sqlite = new SQLiteHelper(Login.this);
                                                         SQLiteDatabase database = sqlite.getWritableDatabase();
                                                         ContentValues values1 = new ContentValues();
@@ -656,130 +783,17 @@ public class Login extends AppCompatActivity {
                                                         editor.putString("quickbulk", String.valueOf(1));
                                                         editor.commit();
                                                     }else{
-                                                        SQLiteHelper sqlite = new SQLiteHelper(Login.this);
-                                                        SQLiteDatabase database = sqlite.getWritableDatabase();
-                                                        ContentValues values1 = new ContentValues();
-                                                        values1.put("quick_bulkupdate", "0");
-                                                        database.update("dd_user", values1,"ID = ?", new String[]{"1"});
-                                                        sqlite.close();
-                                                        database.close();
-                                                        editor.putString("quickbulk", String.valueOf(0));
-                                                        editor.commit();
-                                                    }
-                                                }
-                                                Log.d("user_pass",username+","+password);
-                                                sqlite = new SQLiteHelper(Login.this);
-                                                database = sqlite.getReadableDatabase();
-                                                cursor = database.rawQuery("SELECT * FROM "+SQLiteHelper.TABLENAME12+" WHERE "+SQLiteHelper.USNAM+"=? AND "+SQLiteHelper.USPASS+" =?",new String[]{username,password});
-                                                if (cursor != null) {
-                                                    if (cursor.getCount() != 0) {
-                                                        cursor.moveToFirst();
-                                                        do {
-                                                            int index;
-
-                                                            index = cursor.getColumnIndexOrThrow("username");
-                                                            USER = cursor.getString(index);
-                                                            index = cursor.getColumnIndexOrThrow("password");
-                                                            PASS = cursor.getString(index);
-                                                            index = cursor.getColumnIndexOrThrow("otp");
-                                                            OTP = cursor.getString(index);
-                                                            index = cursor.getColumnIndexOrThrow("ID");
-                                                            ID = cursor.getString(index);
-//                                                            index = cursor.getColumnIndexOrThrow("quick_bulkupdate");
-                                                            Integer quick_bulkupda = 0;
-                                                            String quick_bulkupdate = "0";
-                                                            if(quick_bulkupdate == null ||quick_bulkupdate.equalsIgnoreCase("")){
-                                                                quick_bulkupda = 0;
-                                                            }
-
-                                                            index = cursor.getColumnIndexOrThrow("backup_privilege");
-                                                            Integer backpri = cursor.getInt(index);
-                                                            String bbackp = cursor.getString(index);
-                                                            if(bbackp == null ||bbackp.equalsIgnoreCase("")){
-                                                                backpri = 1;
-                                                            }
-                                                            if(OTP == null || OTP.equalsIgnoreCase("")){
-                                                                editor.putString("user",USER);
-                                                                editor.putString("pass",PASS);
-                                                                editor.putString("otp",OTP);
-                                                                editor.putString("id",ID);
-                                                                editor.putString("backpri", String.valueOf(backpri));
-//                                                                editor.putString("quickbulk", String.valueOf(quick_bulkupda));
-                                                                editor.putInt("isloginn",1);
-                                                                editor.commit();
-                                                                Toast.makeText(getApplicationContext(),"Login successfull",Toast.LENGTH_SHORT).show();
-//                                    cursor.close();
-//                                    sqlite.close();
-//                                    database.close();
-                                                                lastlogin();
-                                                                Intent login = new Intent(Login.this,Enterotp.class);
-                                                                Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
-                                                                        android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
-                                                                login.putExtra("user",USER);
-                                                                login.putExtra("pass",PASS);
-                                                                login.putExtra("otp",OTP);
-                                                                login.putExtra("ID",ID);
-                                                                login.putExtra("vaa","1");
-                                                                editor.putString("backpri", String.valueOf(backpri));
-//                                                                editor.putString("quickbulk", String.valueOf(quick_bulkupda));
-                                                                startActivity(login,bundle);
-
-                                                            }
-                                                            else{
-                                                                editor.putString("user",USER);
-                                                                editor.putString("pass",PASS);
-                                                                editor.putString("otp",OTP);
-                                                                editor.putString("id",ID);
-                                                                editor.putString("backpri", String.valueOf(backpri));
-//                                                                editor.putString("quickbulk", String.valueOf(quick_bulkupda));
-                                                                editor.putInt("isloginn",1);
-                                                                editor.commit();
-                                                                Toast.makeText(getApplicationContext(),"Login successfull",Toast.LENGTH_SHORT).show();
-//                                    cursor.close();
-//                                    sqlite.close();
-//                                    database.close();
-                                                                lastlogin();
-                                                                backupDatabase();
-                                                            }
-                                                        }
-                                                        while (cursor.moveToNext());
-                                                        cursor.close();
-                                                        sqlite.close();
-                                                        database.close();
-                                                    }else{
-                                                        cursor.close();
-                                                        sqlite.close();
-                                                        database.close();
-                                                        backupDatabase1();
-                                                        AlertDialog.Builder alertbox = new AlertDialog.Builder(Login.this,R.style.AlertDialogTheme);
-                                                        String enn = getString(R.string.usepassmis);
-                                                        String war = getString(R.string.warning);
-                                                        String ook = getString(R.string.ok);
-                                                        alertbox.setMessage(enn);
-                                                        alertbox.setTitle(war);
-                                                        alertbox.setIcon(R.drawable.dailylogo);
-                                                        alertbox.setNeutralButton(ook,
-                                                                new DialogInterface.OnClickListener() {
-
-                                                                    public void onClick(DialogInterface arg0,
-                                                                                        int arg1) {
-                                                                    }
-                                                                });
-                                                        alertbox.show();
-                                                    }
-                                                }
-                                                else{
-                                                    cursor.close();
-                                                    sqlite.close();
-                                                    database.close();
-                                                    Toast.makeText(getApplicationContext(),"Username or password is incorrect",Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                            else if(actsta.equalsIgnoreCase("blocked")){
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        if(License.equalsIgnoreCase("no")||License.equalsIgnoreCase("")){
+                                                        if(subscr_id == null || subscr_id.equalsIgnoreCase("") || subscr_id.equalsIgnoreCase("null") || subscr_id.equalsIgnoreCase("Dailydiary")){
+                                                            SQLiteHelper sqlite = new SQLiteHelper(Login.this);
+                                                            SQLiteDatabase database = sqlite.getWritableDatabase();
+                                                            ContentValues values1 = new ContentValues();
+                                                            values1.put("quick_bulkupdate", "0");
+                                                            database.update("dd_user", values1,"ID = ?", new String[]{"1"});
+                                                            sqlite.close();
+                                                            database.close();
+                                                            editor.putString("quickbulk", String.valueOf(0));
+                                                            editor.commit();
+                                                        }else if (  subscr_id.equalsIgnoreCase("quick_bulk_update")){
                                                             SQLiteHelper sqlite = new SQLiteHelper(Login.this);
                                                             SQLiteDatabase database = sqlite.getWritableDatabase();
                                                             ContentValues values1 = new ContentValues();
@@ -790,62 +804,40 @@ public class Login extends AppCompatActivity {
                                                             editor.putString("quickbulk", String.valueOf(1));
                                                             editor.commit();
                                                         }else{
-                                                            if(subscr_id == null || subscr_id.equalsIgnoreCase("") || subscr_id.equalsIgnoreCase("null") || subscr_id.equalsIgnoreCase("Dailydiary")){
-                                                                SQLiteHelper sqlite = new SQLiteHelper(Login.this);
-                                                                SQLiteDatabase database = sqlite.getWritableDatabase();
-                                                                ContentValues values1 = new ContentValues();
-                                                                values1.put("quick_bulkupdate", "0");
-                                                                database.update("dd_user", values1,"ID = ?", new String[]{"1"});
-                                                                sqlite.close();
-                                                                database.close();
-                                                                editor.putString("quickbulk", String.valueOf(0));
-                                                                editor.commit();
-                                                            }else if (  subscr_id.equalsIgnoreCase("quick_bulk_update")){
-                                                                SQLiteHelper sqlite = new SQLiteHelper(Login.this);
-                                                                SQLiteDatabase database = sqlite.getWritableDatabase();
-                                                                ContentValues values1 = new ContentValues();
-                                                                values1.put("quick_bulkupdate", "1");
-                                                                database.update("dd_user", values1,"ID = ?", new String[]{"1"});
-                                                                sqlite.close();
-                                                                database.close();
-                                                                editor.putString("quickbulk", String.valueOf(1));
-                                                                editor.commit();
-                                                            }else{
-                                                                SQLiteHelper sqlite = new SQLiteHelper(Login.this);
-                                                                SQLiteDatabase database = sqlite.getWritableDatabase();
-                                                                ContentValues values1 = new ContentValues();
-                                                                values1.put("quick_bulkupdate", "0");
-                                                                database.update("dd_user", values1,"ID = ?", new String[]{"1"});
-                                                                sqlite.close();
-                                                                database.close();
-                                                                editor.putString("quickbulk", String.valueOf(0));
-                                                                editor.commit();
-                                                            }
+                                                            SQLiteHelper sqlite = new SQLiteHelper(Login.this);
+                                                            SQLiteDatabase database = sqlite.getWritableDatabase();
+                                                            ContentValues values1 = new ContentValues();
+                                                            values1.put("quick_bulkupdate", "0");
+                                                            database.update("dd_user", values1,"ID = ?", new String[]{"1"});
+                                                            sqlite.close();
+                                                            database.close();
+                                                            editor.putString("quickbulk", String.valueOf(0));
+                                                            editor.commit();
                                                         }
-                                                        backupDatabase1();
-                                                        AlertDialog.Builder alertbox = new AlertDialog.Builder(Login.this,R.style.AlertDialogTheme);
-                                                        String rer = getString(R.string.keyblocked);
-                                                        String rer1= getString(R.string.warning);
-                                                        String rer2 = getString(R.string.ok);
-                                                        alertbox.setMessage(rer);
-                                                        alertbox.setTitle(rer1);
-                                                        alertbox.setIcon(R.drawable.dailylogo);
-                                                        alertbox.setNeutralButton(rer2,
-                                                                new DialogInterface.OnClickListener() {
-
-                                                                    public void onClick(DialogInterface arg0,
-                                                                                        int arg1) {
-                                                                        Intent logined = new Intent(Login.this,confirm_OTP.class);
-                                                                        Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
-                                                                                android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
-                                                                        logined.putExtra("vaa","2");
-                                                                        startActivity(logined,bundle);
-                                                                    }
-                                                                });
-                                                        alertbox.show();
                                                     }
-                                                });
-                                            }
+                                                    backupDatabase1();
+                                                    AlertDialog.Builder alertbox = new AlertDialog.Builder(Login.this,R.style.AlertDialogTheme);
+                                                    String rer = getString(R.string.keyblocked);
+                                                    String rer1= getString(R.string.warning);
+                                                    String rer2 = getString(R.string.ok);
+                                                    alertbox.setMessage(rer);
+                                                    alertbox.setTitle(rer1);
+                                                    alertbox.setIcon(R.drawable.dailylogo);
+                                                    alertbox.setNeutralButton(rer2,
+                                                            new DialogInterface.OnClickListener() {
+
+                                                                public void onClick(DialogInterface arg0,
+                                                                                    int arg1) {
+                                                                    Intent logined = new Intent(Login.this,confirm_OTP.class);
+                                                                    Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(getApplicationContext(),
+                                                                            android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
+                                                                    logined.putExtra("vaa","2");
+                                                                    startActivity(logined,bundle);
+                                                                }
+                                                            });
+                                                    alertbox.show();
+                                                }
+                                            });
                                         }
                                     }
                                 });
@@ -1863,6 +1855,7 @@ public class Login extends AppCompatActivity {
         todaaaa = dff.format(c.getInstance().getTime());
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
+        //File data = getCacheDir();
         FileChannel source=null;
         FileChannel destination=null;
         File docsFolder = new File(Environment.getExternalStorageDirectory() + "/Dailydiary_downloads");
@@ -1874,6 +1867,7 @@ public class Login extends AppCompatActivity {
             }
         }
         String currentDBPath = "/data/"+ "com.rampit.rask3.dailydiary" +"/databases/LOGIN";
+        //String currentDBPath = "/com.rampit.rask3.dailydiary" +"/databases/LOGIN";
         String backupDBPath = "/Dailydiary_downloads/DD_RRP_Backup_Mail";
         File currentDB = new File(data, currentDBPath);
         File backupDB = new File(sd, backupDBPath);
