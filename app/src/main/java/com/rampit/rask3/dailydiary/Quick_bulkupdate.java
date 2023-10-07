@@ -1145,11 +1145,7 @@ public class Quick_bulkupdate extends AppCompatActivity {
 
                 }else{
                     if(collectoo == 0){
-                        AlertDialog.Builder alertbox =
-                                null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                            alertbox = new AlertDialog.Builder(Quick_bulkupdate.this,R.style.AlertDialogTheme);
-                        }
+                        AlertDialog.Builder alertbox  = new AlertDialog.Builder(Quick_bulkupdate.this,R.style.AlertDialogTheme);
                         String logmsg = getString(R.string.nocollection);
                         String cann = getString(R.string.ok);
                         String warr = getString(R.string.warning);
