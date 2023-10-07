@@ -773,7 +773,6 @@ public class Debit extends AppCompatActivity
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 v.setFocusable(true);
                 v.setFocusableInTouchMode(true);
                 return false;
@@ -783,7 +782,6 @@ public class Debit extends AppCompatActivity
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 v.setFocusable(true);
                 v.setFocusableInTouchMode(true);
                 return false;

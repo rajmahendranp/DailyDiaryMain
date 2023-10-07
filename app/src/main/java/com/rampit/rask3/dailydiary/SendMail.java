@@ -83,7 +83,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
         String ii1 = pref.getString("NAME","");
         //Configuring properties for gmail
         //If you are not using gmail you may need to change the values
-        props.put("mail.smtp.host", "smtp.rampit.in");
+        props.put("mail.smtp.host","mail.rampit.in");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");

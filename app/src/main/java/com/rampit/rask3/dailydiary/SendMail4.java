@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import java.io.File;
 import java.util.Properties;
 
@@ -30,7 +32,7 @@ import javax.mail.internet.MimeMultipart;
 public class SendMail4 extends AsyncTask<Void,Void,Void> {
 
     //Declaring Variables
-    private Context context;
+    private final Context context;
     private Session session;
 
     //Information to send email
@@ -80,7 +82,7 @@ public class SendMail4 extends AsyncTask<Void,Void,Void> {
         Properties props = new Properties();
         //Configuring properties for gmail
         //If you are not using gmail you may need to change the values
-        props.put("mail.smtp.host", "smtp.rampit.in");
+        props.put("mail.smtp.host","mail.rampit.in");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");

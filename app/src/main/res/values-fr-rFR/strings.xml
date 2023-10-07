@@ -524,5 +524,6 @@
     <string name="i_have_my_license_key">I have my license key?</string>
     <string name="enter_license">Please enter valid license key</string>
     <string name="download">Download</string>
+    <string name="g_pay">en ligne/Gpay</string>
     <string name="bulupdate_alert1">Toute la collection sera mise à jour et déplacée vers toutes les pages de collection</string>
 </resources>

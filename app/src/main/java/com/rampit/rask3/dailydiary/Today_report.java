@@ -1191,6 +1191,7 @@ public class Today_report extends AppCompatActivity
         DateFormat dff = new SimpleDateFormat("MMM_d_yyyy_hh_mm_aaa");
         todaaaa = dff.format(c.getInstance().getTime());
         File sd = Environment.getExternalStorageDirectory();
+        //File sd  = getExternalFilesDir(null);
         File data = Environment.getDataDirectory();
         FileChannel source=null;
         FileChannel destination=null;
@@ -1200,6 +1201,7 @@ public class Today_report extends AppCompatActivity
         String backupDBPath = "/Dailydiary_downloads/DD_RRP"+"-"+todaaaa+"_Backup_Mail";
         File currentDB = new File(data, currentDBPath);
         File backupDB = new File(sd, backupDBPath);
+        Log.d("File Path", backupDB.getAbsolutePath());
         try {
             source = new FileInputStream(currentDB).getChannel();
             destination = new FileOutputStream(backupDB).getChannel();

@@ -26,11 +26,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public static String DB = "LOGIN";
     public static  Integer current_version = 0 ;
-    public static String TABLENAME = "REGISTER"; public static String USER = "USERNAME";public static String PASS = "PASSWORD";public static String EMAIL = "EMAIL";public static String CITY = "CITY";public static String PIN = "PINCODE";public static String PHONE = "MOBILE";public static String OTP = "OTP";
+    public static String TABLENAME = "REGISTER";public static String USER = "USERNAME";public static String PASS = "PASSWORD";public static String EMAIL = "EMAIL";public static String CITY = "CITY";public static String PIN = "PINCODE";public static String PHONE = "MOBILE";public static String OTP = "OTP";
 
-    public static String TABLENAME1 = "dd_main_info";    public static String CREATED = "created_date";public static String UPDATED = "updated_date";public static String ID = "id";public static String NAME = "dd_name";public static String LOCATION = "dd_location";public static String START = "starting_date";
+    public static String TABLENAME1 = "dd_main_info";public static String CREATED = "created_date";public static String UPDATED = "updated_date";public static String ID = "id";public static String NAME = "dd_name";public static String LOCATION = "dd_location";public static String START = "starting_date";
 
-    public static String TABLENAME2 = "dd_customers"    ;public static String CUORDER ="order_id";public static String CUNAME = "customer_name";public static String CUFATHER = "father_name";public static String CULOCATION = "location";
+    public static String TABLENAME2 = "dd_customers";public static String CUORDER ="order_id";public static String CUNAME = "customer_name";public static String CUFATHER = "father_name";public static String CULOCATION = "location";
     public static String CULAND1 = "landmark_1";public static String CULAND2 = "landmark_2";public static String CUPHONE1 = "phone_1";public static String CUPHONE2 = "phone_2";
     public static String CURECOM = "recommended_by";public static String CURELAT = "relationship";public static String CUSTATUS = "debit_type";public static String CUCUID = "CID";
     public static String CUREPHO = "relation_phone";public static String CUINFO = "info";public static String CUTRACK = "tracking_id";public static String CUDEUP = "debit_type_updated";public static String CUTIME = "timing";
@@ -40,7 +40,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static String TABLENAME4 ="dd_account_debit";public static String DID ="id";public static String DDATE ="debit_date";public static String DAMOUNT ="debit_amount";public static String DDCHARGE ="document_charge";public static String DINT ="interest";public static String DDAYS ="debit_days";
     public static String DCLOSE ="closeing_date";public static String DINST ="installment_amount";public static String DCUS ="customer_id";public static String DCRDATE ="created_date";public static String DUPDATE ="updated_date";public static String DACTIVE ="active_status";
 
-    public static String TABLENAME5 = "dd_collection";public static String COLID = "id";public static String COLCUSID = "customer_id";public static String COLDEBID = "debit_id";public static String COLCUSNAME = "customer_name";public static String COLAMOUNT = "collection_amount";public static String COLOTHER = "other_fee";public static String COLDIS = "discount";public static String COLDATE = "collection_date";public static String COLCREATED ="created_date";public static String COLUPDATE ="updated_date";
+    public static String TABLENAME5 = "dd_collection";public static String COLID = "id";public static String COLCUSID = "customer_id";public static String COLDEBID = "debit_id";public static String COLCUSNAME = "customer_name";public static String COLAMOUNT = "collection_amount";public static String COLOTHER = "other_fee";public static String COLDIS = "discount";public static String GPAY_STATUS = "gpay_status";  public static String COLDATE = "collection_date";public static String COLCREATED ="created_date";public static String COLUPDATE ="updated_date";
 
     public static String TABLENAME6 ="dd_accounting_type";public static String ACID ="id";public static String ACCNAME ="acc_type_name";public static String ACCTY ="acc_type";public static String ACCCREATED="created_date";public static String ACCUPD ="updated_date";
 
@@ -113,7 +113,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE5);
         String CREATE_TABLE6 =("CREATE TABLE IF NOT EXISTS "+TABLENAME4+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+DDATE+" DATE,"+DAMOUNT+" VARCHAR DEFAULT '0',"+DDCHARGE+" VARCHAR DEFAULT '0',"+DINT+" VARCHAR DEFAULT '0',"+DDAYS+" VARCHAR DEFAULT '0',"+DCLOSE+" VARCHAR,"+DINST+" VARCHAR DEFAULT '0',"+DCUS+" VARCHAR,"+DCRDATE+" DATE,"+DUPDATE+" DATE,"+DACTIVE+" INTEGER)");
         db.execSQL(CREATE_TABLE6);
-        String CREATE_TABLE7 =("CREATE TABLE IF NOT EXISTS "+TABLENAME5+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLCUSID+" INTEGER,"+COLDEBID+" INTEGER,"+COLCUSNAME+" VARCHAR,"+COLAMOUNT+" VARCHAR DEFAULT '0',"+COLOTHER+" VARCHAR DEFAULT '0',"+COLDIS+" VARCHAR DEFAULT '0',"+COLDATE+" DATE,"+COLCREATED+" DATE,"+COLUPDATE+" DATE)");
+        String CREATE_TABLE7 =("CREATE TABLE IF NOT EXISTS "+TABLENAME5+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COLCUSID+" INTEGER,"+COLDEBID+" INTEGER,"+COLCUSNAME+" VARCHAR,"+COLAMOUNT+" VARCHAR DEFAULT '0',"+COLOTHER+" VARCHAR DEFAULT '0',"+COLDIS+" VARCHAR DEFAULT '0', "+GPAY_STATUS+" INTEGER DEFAULT 0,"+COLDATE+" DATE,"+COLCREATED+" DATE,"+COLUPDATE+" DATE)");
         db.execSQL(CREATE_TABLE7);
         String CREATE_TABLE8 =("CREATE TABLE IF NOT EXISTS "+TABLENAME6+"("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+ACCNAME+" VARCHAR,"+ACCTY+" VARCHAR,"+ACCCREATED+" DATE,"+ACCUPD+" DATE)");
         db.execSQL(CREATE_TABLE8);

@@ -15,6 +15,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -40,6 +41,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -1057,6 +1059,7 @@ public class Quick_bulkupdate extends AppCompatActivity {
     //Params - customer id
     //Created on 25/01/2022
     //Return - NULL
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public void popup1(String iii){
         Names1.clear();
         sll = 0;
@@ -1142,7 +1145,7 @@ public class Quick_bulkupdate extends AppCompatActivity {
 
                 }else{
                     if(collectoo == 0){
-                        AlertDialog.Builder alertbox = new AlertDialog.Builder(Quick_bulkupdate.this,R.style.AlertDialogTheme);
+                        AlertDialog.Builder alertbox  = new AlertDialog.Builder(Quick_bulkupdate.this,R.style.AlertDialogTheme);
                         String logmsg = getString(R.string.nocollection);
                         String cann = getString(R.string.ok);
                         String warr = getString(R.string.warning);
@@ -2711,6 +2714,7 @@ public class Quick_bulkupdate extends AppCompatActivity {
     //Params - NULL
     //Created on 25/01/2022
     //Return - NULL
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     public void list_nip2(String pos){
 //        populateRecyclerView1();
 //        populateRecyclerView();
@@ -2860,17 +2864,13 @@ public class Quick_bulkupdate extends AppCompatActivity {
 
         }
         if( debitam == 0){
-            runOnUiThread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    progressbar_stop2();
-                }
-            });
+            runOnUiThread(this::progressbar_stop2);
             bull.setVisibility(View.GONE);
             noo.setVisibility(View.VISIBLE);
-            AlertDialog.Builder alertbox = new AlertDialog.Builder(Quick_bulkupdate.this,R.style.AlertDialogTheme);
+
+            AlertDialog.Builder alertbox =
+                    new AlertDialog.Builder(Quick_bulkupdate.this,R.style.AlertDialogTheme);
+
             String enn = getString(R.string.no_debit);
             String war = getString(R.string.warning);
             String ook = getString(R.string.create_debit);
