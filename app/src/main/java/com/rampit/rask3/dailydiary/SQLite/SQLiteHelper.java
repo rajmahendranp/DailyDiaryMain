@@ -38,6 +38,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static String TABLENAME3 ="dd_tracking_type";public static String TID ="ID";public static String TNAME ="NAME";
 
     public static String TABLENAME4 ="dd_account_debit";public static String DID ="id";public static String DDATE ="debit_date";public static String DAMOUNT ="debit_amount";public static String DDCHARGE ="document_charge";public static String DINT ="interest";public static String DDAYS ="debit_days";
+
     public static String DCLOSE ="closeing_date";public static String DINST ="installment_amount";public static String DCUS ="customer_id";public static String DCRDATE ="created_date";public static String DUPDATE ="updated_date";public static String DACTIVE ="active_status";
 
     public static String TABLENAME5 = "dd_collection";public static String COLID = "id";public static String COLCUSID = "customer_id";public static String COLDEBID = "debit_id";public static String COLCUSNAME = "customer_name";public static String COLAMOUNT = "collection_amount";public static String COLOTHER = "other_fee";public static String COLDIS = "discount";public static String GPAY_STATUS = "gpay_status";  public static String COLDATE = "collection_date";public static String COLCREATED ="created_date";public static String COLUPDATE ="updated_date";
